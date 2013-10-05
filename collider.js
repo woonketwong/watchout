@@ -36,7 +36,6 @@
     });
   };
 
-  // var player = gameBoard.select('circle.player').data([gameOptions.width/2, gameOptions.height/2]);
   var player = gameBoard.append('svg:circle').attr('cx', 200).attr('cy', 200).attr('r', 10).attr('fill', 'red').call(d3.behavior.drag().on('drag', move));
   
   function move() {
@@ -61,6 +60,24 @@
 
     enemies.exit().remove();
 
+    var checkCollision = function(enemy, collidedCallback) {
+      var radiusSum = parseFloat(enemy.attr('r') + player.r);
+      var diffX = parseFloat(enemy.attr('cx')) - parseFloat(player.attr('cx'));
+      var diffY = parseFloat(enemy.attr('cy')) - parseFloat(player.attr('cy'));
+      var distance = Math.sqrt(Math.pow(diffX,2) + Math.pow(diffY,2));
+      if (distance < radiusSum){
+        collidedCallback(player, enemy);
+      };
+    }
+
+    var onCollision = function(player, enemy){
+    //   updateBestScore();
+    //   gameStats.score = 0;
+    //   updateScore();
+      enemy.attr('fill','green');
+      console.log("Collided");
+    }
+
     var tweenMove = function(endData){
       var enemy = d3.select(this);
       var startPos = {
@@ -74,6 +91,8 @@
       };
 
       return function(t) {
+        checkCollision(enemy, onCollision);
+
         var enemyNextPos = {
           x: startPos.x + (endPos.x - startPos.x) * t,
           y: startPos.y + (endPos.y - startPos.y) * t
