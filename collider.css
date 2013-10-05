@@ -1,0 +1,25 @@
+h1, h2, h3 {
+  font-family: "Trebuchet MS";
+}
+body{
+  background: url("bo_play.png");
+}
+.container {
+  width: 800px;
+  background: #eee;
+  padding: 20px;
+  margin: 50px auto;
+}
+#scores {
+  float:right;
+  width: 200px;
+  margin:5px;
+  background-color: gray;
+  padding-left: 10px;
+  border-radius: 15px;
+}
+#game-header {
+  float:left;
+  width: 200px;
+  margin:5px;
+}
